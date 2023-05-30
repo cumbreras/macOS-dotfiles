@@ -97,12 +97,7 @@ bindkey -v '^?' backward-delete-char
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-export EDITOR='nvim'
-# fi
+export EDITOR='lvim'
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -110,12 +105,12 @@ export EDITOR='nvim'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="nvim ~/.zshrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias n="nvim ."
+alias zshconfig="lvim ~/.zshrc"
+alias ohmyzsh="lvim ~/.oh-my-zsh"
 alias l="lvim ."
 alias k="kubectl"
 alias ls="lsd"
+alias cat="bat"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
