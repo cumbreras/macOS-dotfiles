@@ -114,21 +114,10 @@ alias cat="bat"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/M365Princess.omp.json)"
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-
-# bun completions
-[ -s "/Users/cumbreras/.bun/_bun" ] && source "/Users/cumbreras/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
@@ -137,3 +126,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PNPM_HOME="/Users/cumbreras/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+#
+export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
