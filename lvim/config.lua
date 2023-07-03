@@ -92,53 +92,56 @@ require("tokyonight").setup({
 })
 
 -- setup must be called before loading
-lvim.colorscheme = "tokyonight"
-lvim.format_on_save.enabled = true
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
+
 -- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
-lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+--
 lvim.keys.insert_mode = {
   ["jj"] = "<Esc>",
 }
+
+lvim.keys.normal_mode = {
+  ["<C-s>"] = ":w<cr>",
+  ["<S-l>"] = ":BufferLineCycleNext<CR>",
+  ["<S-h>"] = ":BufferLineCyclePrev<CR>"
+}
+
 vim.cmd("set timeoutlen=300")
-lvim.keys.normal_mode["<C-h>"] = "<C-w>h"
-lvim.keys.normal_mode["<C-j>"] = "<C-w>j"
-lvim.keys.normal_mode["<C-k>"] = "<C-w>k"
-lvim.keys.normal_mode["<C-l>"] = "<C-w>l"
 -- unmap a default keymapping
+--
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
--- local _, actions = pcall(require, "telescope.actions")
--- lvim.builtin.telescope.defaults.mappings = {
---   -- for input mode
---   i = { ["<C-j>"] = actions.move_selection_next,
---     ["<C-k>"] = actions.move_selection_previous,
---     ["<C-n>"] = actions.cycle_history_next,
---     ["<C-p>"] = actions.cycle_history_prev,
---   },
---   -- for normal mode
---   n = {
---     ["<C-j>"] = actions.move_selection_next,
---     ["<C-k>"] = actions.move_selection_previous,
---   },
--- }
+local _, actions = pcall(require, "telescope.actions")
+lvim.builtin.telescope.defaults.mappings = {
+  -- for input mode
+  i = {
+    ["<C-j>"] = actions.move_selection_next,
+    ["<C-k>"] = actions.move_selection_previous,
+    ["<C-n>"] = actions.cycle_history_next,
+    ["<C-p>"] = actions.cycle_history_prev,
+  },
+  -- for normal mode
+  n = {
+    ["<C-j>"] = actions.move_selection_next,
+    ["<C-k>"] = actions.move_selection_previous,
+  },
+}
 
 -- Change theme settings
--- lvim.builtin.theme.options.dim_inactive = true
--- lvim.builtin.theme.options.style = "storm"
+lvim.colorscheme = "tokyonight"
+lvim.format_on_save.enabled = true
 
 -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["r"] = { "<cmd>RnvimrToggle<CR>", "Ranger" }
 -- lvim.builtin.which_key.mappings["t"] = {
 --   name = "+Trouble",
 --   r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -154,6 +157,7 @@ lvim.keys.normal_mode["<C-l>"] = "<C-w>l"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
+lvim.builtin.terminal.open_mapping = "<S-t>"
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
@@ -177,6 +181,7 @@ lvim.builtin.treesitter.ensure_installed = {
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enable = true
+
 
 -- generic LSP settings
 
@@ -259,11 +264,53 @@ lvim.plugins = {
   { "marko-cerovac/material.nvim" },
   { "lunarvim/colorschemes" },
   { "arcticicestudio/nord-vim" },
+  {
+    "kevinhwang91/rnvimr",
+    cmd = "RnvimrToggle",
+    config = function()
+      vim.g.rnvimr_draw_border = 1
+      vim.g.rnvimr_pick_enable = 1
+      vim.g.rnvimr_bw_enable = 1
+      vim.g.rnvimr_enable_ex = 1
+    end,
+  },
   { "github/copilot.vim" },
   { "catppuccin/nvim",            name = "catppuccin" },
   { "bluz71/vim-nightfly-colors", name = "nightfly" },
-  { 'yriveiro/dap-go.nvim',       requires = { { 'nvim-lua/plenary.nvim' } } }
+  { 'yriveiro/dap-go.nvim',       requires = { { "nvim-lua/plenary.nvim" } } },
+  {
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  },
+  {
+    "nvim-neorg/neorg",
+    config = function()
+      require('neorg').setup {
+        load = {
+          ["core.defaults"] = {},  -- Loads default behaviour
+          ["core.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.dirman"] = {      -- Manages Neorg workspaces
+            config = {
+              workspaces = {
+                notes = "~/notes",
+              },
+            },
+          },
+        },
+      }
+    end,
+    run = ":Neorg sync-parsers",
+    requires = "nvim-lua/plenary.nvim",
+  }
 }
+
+lvim.builtin.terminal.open_mapping = "<C-t>"
+
 vim.g.material_style = "deep ocean"
 
 require('dap-go').setup {
@@ -292,6 +339,7 @@ require('dap-go').setup {
   },
 }
 
+
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
@@ -305,3 +353,5 @@ require('dap-go').setup {
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
+--
+--

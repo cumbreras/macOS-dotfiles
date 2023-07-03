@@ -107,7 +107,7 @@ export EDITOR='lvim'
 # Example aliases
 alias zshconfig="lvim ~/.zshrc"
 alias ohmyzsh="lvim ~/.oh-my-zsh"
-alias l="lvim ."
+alias l="lvim"
 alias k="kubectl"
 alias ls="lsd"
 alias cat="bat"
