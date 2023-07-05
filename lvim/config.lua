@@ -277,10 +277,10 @@ lvim.plugins = {
   { "github/copilot.vim" },
   { "catppuccin/nvim",            name = "catppuccin" },
   { "bluz71/vim-nightfly-colors", name = "nightfly" },
-  { 'yriveiro/dap-go.nvim',       requires = { { "nvim-lua/plenary.nvim" } } },
+  { 'yriveiro/dap-go.nvim',       dependencies = { { "nvim-lua/plenary.nvim" } } },
   {
     "kylechui/nvim-surround",
-    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
     config = function()
       require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults
@@ -304,8 +304,8 @@ lvim.plugins = {
         },
       }
     end,
-    run = ":Neorg sync-parsers",
-    requires = "nvim-lua/plenary.nvim",
+    build = ":Neorg sync-parsers",
+    dependencies = "nvim-lua/plenary.nvim",
   }
 }
 
