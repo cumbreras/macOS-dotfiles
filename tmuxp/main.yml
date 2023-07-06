@@ -1,0 +1,14 @@
+session_name: Main
+start_directory: ~/dev
+windows:
+- window_name: MainDev
+  layout: main-horizontal
+  options:
+    main-pane-height: 5
+  panes:
+  - shell_command:
+    - cmd: echo "pane 1"
+  - shell_command:
+    - cmd: echo "pane 2"
+  - shell_command:
+    - cmd: echo "pane 3"
